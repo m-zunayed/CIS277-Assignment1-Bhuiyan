@@ -35,19 +35,25 @@ g++ -std=c++17 -Wall -Wextra -pedantic main.cpp MemoryPool.cpp -o buffer_pool
 ## Analysis Questions
 
 1. Why is a Stack appropriate for managing the free blocks in this memory pool?
+
 A Stack is appropriate because when a block is released, it can be pushed back onto the Stack and quickly reused by the next allocation.
 
 2. What happens when the free-block Stack becomes empty?
+
 When the free-block Stack is empty, there are no available memory blocks left in the pool. The allocate() function returns nullptr.
 
 3. Why must a released block be returned to the Stack?
+
 A released block must be returned to the Stack so that it becomes available for future allocations.
 
 4. What problem could occur if the same block were deallocated twice?
+
 If the same block were deallocated twice, the same memory address could be added to the free Stack more than once. This could cause the same block to be given to multiple allocations and lead to memory problems.
 
 5. What is the Big-O time complexity of allocate()? Explain why.
+
 The time complexity of allocate() is O(1) because it removes one block from the top of the Stack and updates its allocation status without searching through the pool.
 
 6. What is the Big-O time complexity of deallocate()? Explain why.
+
 The time complexity of deallocate() is O(1) because it validates the block, updates its allocation status and pushes it back onto the Stack without searching through all the blocks.
